@@ -1,0 +1,21 @@
+package Animals;
+
+public class TreeLemur extends Lemur {
+  
+  public TreeLemur(int age, int weight, String gender){
+    super(age,weight,gender);
+  }
+  
+  public TreeLemur(){
+    super();
+  }
+  
+  public String ToString(){
+    String s = "TreeLemur: \n";
+    s+= super.ToString(); 
+    s+= "Travel in large groups \n"; 
+    s+= "Eat fruit \n"; 
+    s+= "Have a red mane \n"; 
+    return s;
+  }
+}

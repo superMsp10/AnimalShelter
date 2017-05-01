@@ -1,0 +1,23 @@
+package Animals;
+
+public class Lemur extends Mammal {
+    public static int maxAge = 25;
+    public static int maxWeight = 100;
+        
+  public Lemur(Boolean randomize){
+    super(randomize);
+  }
+
+  
+  public String ToString(){
+    String s = "Lemur: \n";
+    s+= super.ToString(); 
+    s+= "Live in Madagascar \n";
+    s+= "Have Fur \n";
+    s+= "Prosimians \n";
+    s+= "Groom using teeth as a comb \n";
+    s+= "Females play dominant role \n";
+
+    return s;
+  }
+}

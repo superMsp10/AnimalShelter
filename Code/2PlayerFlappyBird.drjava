@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20140826-r5761">
+  <project autorefresh="false" build="../Builds/" main="MainFile" root="" work="">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="Code/MainFile.java" package="Code" timestamp="06-Jun-2016 13:25:49">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="Level/DefaultLevel.java" package="Level" timestamp="25-May-2016 12:32:08">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="Level/Cloud.java" package="Level" timestamp="06-Jun-2016 12:24:49">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="inputs/Mouse.java" package="inputs" timestamp="25-May-2016 13:34:02">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="graphics/Sprite.java" package="graphics" timestamp="06-Jun-2016 12:48:58">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="inputs/Keyboard.java" package="inputs" timestamp="06-Jun-2016 12:24:50">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="Player/Player.java" package="Player" timestamp="06-Jun-2016 13:18:04">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+      <file name="graphics/Display.java" package="graphics" timestamp="23-Sep-2016 14:14:34">
+        <select from="2285" to="2285"/>
+        <scroll column="1008" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath>
+      <file absolute="false" name="../Resources/"/>
+    </classpath>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>
