@@ -1,11 +1,11 @@
 package Code;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import Animals.Mammal;
 
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
 import Level.DefaultLevel;
@@ -18,15 +18,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.Graphics;
-import java.awt.TrayIcon.MessageType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -56,56 +47,6 @@ public class MainFile extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 
-		JOptionPane pane = new JOptionPane("hello",0,1 );
-		// Configure via set methods
-		JDialog dialog = pane.createDialog(null, title);
-		// the line below is added to the example from the docs
-		dialog.setModal(false); // this says not to block background components
-		dialog.setVisible(true);
-		dialog.setContentPane(pane);
-		dialog.addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent e) {
-
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				System.out.println(pane.getValue());
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-
 		// JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade
 		// by Mahan Pandey \n", "Welcome!", 1);
 		//
@@ -118,29 +59,80 @@ public class MainFile extends Canvas implements Runnable {
 		// main.frame.setTitle(title);
 		// main.frame.setVisible(true);
 		// main.start();
+		
+		JTextField text = new JTextField("hello");
+		JOptionPane pane = new JOptionPane("Enter text", JOptionPane.QUESTION_MESSAGE);
+		pane.add(text,1);
+		// Configure via set methods
+		JDialog dialog = pane.createDialog(null, title);
+		// the line below is added to the example from the docs
+		dialog.setModal(false); // this says not to block background components
+		dialog.setVisible(true);
+		dialog.setContentPane(pane);
+		dialog.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				System.out.println(text.getText());
+				dialog.setVisible(true);
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 	}
 
 	public MainFile() {
-		// thisMain = this;
-		//
-		// Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
-		// setPreferredSize(size);
-		// frame = new JFrame();
-		// SCREEN = new Display();
-		// keyboard = Keyboard.defKeyboard;
-		// addKeyListener(keyboard);
-		// requestFocus();
-		//
-		// try {
-		// startMenu();
-		// } catch (Exception e) {
-		// JOptionPane.showMessageDialog(null, "Not an accepted value, program
-		// will close", title,
-		// JOptionPane.INFORMATION_MESSAGE);
-		// System.exit(0);
-		// }
+		thisMain = this;
 
+		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+		setPreferredSize(size);
+		frame = new JFrame();
+		SCREEN = new Display();
+		keyboard = Keyboard.defKeyboard;
+		addKeyListener(keyboard);
+		requestFocus();
+
+		try {
+			startMenu();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Not an accepted value, program will close", title,
+					JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
+		}
+
+		
 	}
 
 	public void startMenu() {
