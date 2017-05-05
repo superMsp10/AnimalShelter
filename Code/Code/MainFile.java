@@ -1,11 +1,9 @@
 package Code;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import Animals.Mammal;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Level.DefaultLevel;
@@ -47,70 +45,24 @@ public class MainFile extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 
-		// JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade
-		// by Mahan Pandey \n", "Welcome!", 1);
-		//
-		// MainFile main = new MainFile();
-		// main.frame.setResizable(false);
-		// main.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// main.frame.add(main);
-		// main.frame.pack();
-		// main.frame.setLocationRelativeTo(null);
-		// main.frame.setTitle(title);
-		// main.frame.setVisible(true);
-		// main.start();
+		 JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade by Mahan Pandey \n", "Welcome!", 1);
 		
-		JTextField text = new JTextField("hello");
-		JOptionPane pane = new JOptionPane("Enter text", JOptionPane.QUESTION_MESSAGE);
-		pane.add(text,1);
-		// Configure via set methods
-		JDialog dialog = pane.createDialog(null, title);
-		// the line below is added to the example from the docs
-		dialog.setModal(false); // this says not to block background components
-		dialog.setVisible(true);
-		dialog.setContentPane(pane);
-		dialog.addWindowListener(new WindowListener() {
+		 MainFile main = new MainFile();
+		 main.frame.setResizable(false);
+		 main.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 main.frame.add(main);
+		 main.frame.pack();
+		 main.frame.setLocationRelativeTo(null);
+		 main.frame.setTitle(title);
+		 main.frame.setVisible(true);
+		 main.start();
+		
+	
 
-			@Override
-			public void windowOpened(WindowEvent e) {
+	}
 
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				System.out.println(text.getText());
-				dialog.setVisible(true);
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
+	public void retTest() {
+		System.out.println("hello");
 	}
 
 	public MainFile() {
@@ -126,20 +78,20 @@ public class MainFile extends Canvas implements Runnable {
 
 		try {
 			startMenu();
+			HowMany("DOGS", 10, "retTest");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Not an accepted value, program will close", title,
 					JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		}
 
-		
 	}
 
 	public void startMenu() {
 
-		int num = HowMany("Animals", 20);
-		for (int i = 0; i < num; i++)
-			lev.AddAnimal(new Mammal(true));
+//		int num = HowMany("Animals", 20);
+//		for (int i = 0; i < num; i++)
+//			lev.AddAnimal(new Mammal(true));
 	}
 
 	public void mainMenu() {
@@ -161,20 +113,69 @@ public class MainFile extends Canvas implements Runnable {
 		menued = true;
 	}
 
-	public int HowMany(String name, int max) {
-		try {
-			int num = Integer.parseInt(JOptionPane.showInputDialog(frame,
-					"How many " + name + " would you like?" + "\n -1. Randomize \n Or type any integer", title,
-					JOptionPane.INFORMATION_MESSAGE));
+	public void HowMany(String name, int max, final String returnMethod) {
+	
+			InputJOption pane = new InputJOption(
+					"How many " + name + " would you like?" + "\n -1. Randomize \n Or type any integer", title);
+			pane.showInput();
+			pane.dialog.addWindowListener(new WindowListener() {
 
-			if (num == -1) {
-				num = (int) (Math.random() * max);
-			}
-			return num;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
+				@Override
+				public void windowOpened(WindowEvent e) {
+
+				}
+
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					System.out.println(pane.inputField.getText());
+					int num = Integer.parseInt(pane.inputField.getText());
+					if (num == -1) {
+						num = (int) (Math.random() * max);
+					}
+					java.lang.reflect.Method method = null;
+
+					try {
+						method = thisMain.getClass().getMethod(returnMethod);
+						method.invoke(num);
+					} catch (Exception f) {
+						f.printStackTrace();
+					}
+
+					pane.dialog.removeWindowListener(this);
+					pane.closeInput();
+				}
+
+				@Override
+				public void windowClosing(WindowEvent e) {
+
+				}
+
+				@Override
+				public void windowClosed(WindowEvent e) {
+
+				}
+
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+
 
 	}
 
@@ -206,7 +207,6 @@ public class MainFile extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		System.out.println(keyboard.up);
 		keyboard.update();
 		lev.Update();
 		if (!menued) {
