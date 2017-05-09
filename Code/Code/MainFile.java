@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import Animals.Mammal;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Level.DefaultLevel;
@@ -45,19 +46,17 @@ public class MainFile extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 
-		 JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade by Mahan Pandey \n", "Welcome!", 1);
-		
-		 MainFile main = new MainFile();
-		 main.frame.setResizable(false);
-		 main.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 main.frame.add(main);
-		 main.frame.pack();
-		 main.frame.setLocationRelativeTo(null);
-		 main.frame.setTitle(title);
-		 main.frame.setVisible(true);
-		 main.start();
-		
-	
+		JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade by Mahan Pandey \n", "Welcome!", 1);
+
+		MainFile main = new MainFile();
+		main.frame.setResizable(false);
+		main.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.frame.add(main);
+		main.frame.pack();
+		main.frame.setLocationRelativeTo(null);
+		main.frame.setTitle(title);
+		main.frame.setVisible(true);
+		main.start();
 
 	}
 
@@ -89,9 +88,9 @@ public class MainFile extends Canvas implements Runnable {
 
 	public void startMenu() {
 
-//		int num = HowMany("Animals", 20);
-//		for (int i = 0; i < num; i++)
-//			lev.AddAnimal(new Mammal(true));
+		// int num = HowMany("Animals", 20);
+		// for (int i = 0; i < num; i++)
+		// lev.AddAnimal(new Mammal(true));
 	}
 
 	public void mainMenu() {
@@ -114,68 +113,73 @@ public class MainFile extends Canvas implements Runnable {
 	}
 
 	public void HowMany(String name, int max, final String returnMethod) {
-	
-			InputJOption pane = new InputJOption(
-					"How many " + name + " would you like?" + "\n -1. Randomize \n Or type any integer", title);
-			pane.showInput();
-			pane.dialog.addWindowListener(new WindowListener() {
 
-				@Override
-				public void windowOpened(WindowEvent e) {
+		new InputJOption(frame, "Enter something", title).setVisible(true);
 
-				}
-
-				@Override
-				public void windowIconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void windowDeiconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-
-				@Override
-				public void windowDeactivated(WindowEvent e) {
-					System.out.println(pane.inputField.getText());
-					int num = Integer.parseInt(pane.inputField.getText());
-					if (num == -1) {
-						num = (int) (Math.random() * max);
-					}
-					java.lang.reflect.Method method = null;
-
-					try {
-						method = thisMain.getClass().getMethod(returnMethod);
-						method.invoke(num);
-					} catch (Exception f) {
-						f.printStackTrace();
-					}
-
-					pane.dialog.removeWindowListener(this);
-					pane.closeInput();
-				}
-
-				@Override
-				public void windowClosing(WindowEvent e) {
-
-				}
-
-				@Override
-				public void windowClosed(WindowEvent e) {
-
-				}
-
-				@Override
-				public void windowActivated(WindowEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-
-
+		// InputJOption pane = new InputJOption(
+		// "How many " + name + " would you like?" + "\n -1. Randomize \n Or
+		// type any integer", title);
+		// pane.showInput();
+		// pane.dialog.addWindowListener(new WindowListener() {
+		//
+		// @Override
+		// public void windowOpened(WindowEvent e) {
+		//
+		// }
+		//
+		// @Override
+		// public void windowIconified(WindowEvent e) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void windowDeiconified(WindowEvent e) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void windowDeactivated(WindowEvent e) {
+		// try {
+		// System.out.println(pane.inputField.getText());
+		// int num = Integer.parseInt(pane.inputField.getText());
+		// if (num == -1) {
+		// num = (int) (Math.random() * max);
+		// }
+		// java.lang.reflect.Method method = null;
+		//
+		// try {
+		// method = thisMain.getClass().getMethod(returnMethod);
+		// method.invoke(num);
+		// } catch (Exception f) {
+		// f.printStackTrace();
+		// }
+		//
+		// pane.dialog.removeWindowListener(this);
+		// pane.closeInput();
+		// } catch (Exception ex) {
+		// ex.printStackTrace();
+		// }
+		//
+		// }
+		//
+		// @Override
+		// public void windowClosing(WindowEvent e) {
+		//
+		// }
+		//
+		// @Override
+		// public void windowClosed(WindowEvent e) {
+		//
+		// }
+		//
+		// @Override
+		// public void windowActivated(WindowEvent e) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
 
 	}
 
