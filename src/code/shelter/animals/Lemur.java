@@ -1,4 +1,4 @@
-package Animals;
+package code.shelter.animals;
 
 public class Lemur extends Mammal {
   protected int maxAge = 50;

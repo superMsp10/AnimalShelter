@@ -1,4 +1,4 @@
-package Animals;
+package code.shelter.animals;
 
 public class Dog extends Mammal {
   public Dog(boolean randomize, int x, int y) {

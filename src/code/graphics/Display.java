@@ -1,8 +1,8 @@
-package graphics;
+package code.graphics;
 
 import java.util.Random;
 
-import Code.MainFile;
+import code.MainFile;
 
 public class Display {
 	public int[] pixels;

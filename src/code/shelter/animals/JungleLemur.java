@@ -1,4 +1,4 @@
-package Animals;
+package code.shelter.animals;
 
 import javax.swing.JOptionPane;
 public class JungleLemur extends Lemur {

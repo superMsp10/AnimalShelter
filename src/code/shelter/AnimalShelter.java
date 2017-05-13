@@ -1,23 +1,21 @@
-package Level;
+package code.shelter;
 
 import java.util.ArrayList;
 
-import Animals.Mammal;
-import Code.MainFile;
-import graphics.Display;
-import graphics.Sprite;
+import code.MainFile;
+import code.graphics.Display;
+import code.graphics.Sprite;
+import code.shelter.animals.Mammal;
 
-public class DefaultLevel {
+public class AnimalShelter {
 
 	public Sprite background = new Sprite("/Background.png", 800);
-	int numberofClouds = 10;
-	Sprite s;
 	public ArrayList<Mammal> animals = new ArrayList<>();
 
 	int spaceBetween = 150;
 	int animalsPerRow;
 
-	public DefaultLevel() {
+	public AnimalShelter() {
 		animalsPerRow = MainFile.WIDTH / spaceBetween;
 	}
 

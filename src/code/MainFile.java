@@ -1,24 +1,19 @@
-package Code;
-
-import javax.swing.JOptionPane;
-
-import Animals.Mammal;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
-import Level.DefaultLevel;
-import graphics.*;
-import inputs.*;
+package code;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.awt.Graphics;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import code.graphics.Display;
+import code.graphics.InputJOption;
+import code.inputs.Keyboard;
+import code.shelter.AnimalShelter;
 
 public class MainFile extends Canvas implements Runnable {
 
@@ -35,7 +30,7 @@ public class MainFile extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
 	public static Display SCREEN;
-	public DefaultLevel lev = new DefaultLevel();
+	public AnimalShelter lev = new AnimalShelter();
 
 	private Keyboard keyboard;
 	boolean paused = false;

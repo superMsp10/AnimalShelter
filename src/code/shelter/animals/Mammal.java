@@ -1,9 +1,9 @@
-package Animals;
+package code.shelter.animals;
 
 import javax.swing.JOptionPane;
 
-import graphics.Display;
-import graphics.Sprite;
+import code.graphics.Display;
+import code.graphics.Sprite;
 
 public class Mammal {
 	public static String Genders[] = { "Male", "Female", "Trans" };
