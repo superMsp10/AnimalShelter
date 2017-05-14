@@ -1,5 +1,7 @@
 package code;
 
+import input.Keyboard;
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -45,8 +47,9 @@ public class MainFile extends Canvas implements Runnable {
 
 	// Others
 	public static Display SCREEN;
-	public AnimalShelter shelter = new AnimalShelter();
+	public AnimalShelter shelter;
 	public static String title = "Animal House";
+	public Keyboard keyboard;
 
 	public static void main(String[] args) {
 
@@ -57,7 +60,7 @@ public class MainFile extends Canvas implements Runnable {
 		// Main Frame init
 		MainFile main = new MainFile();
 		main.start();
-		main.startMenu();
+		main.addAnimals();
 
 	}
 
@@ -83,11 +86,16 @@ public class MainFile extends Canvas implements Runnable {
 		frame.setLocationRelativeTo(null);
 		frame.setTitle(title);
 		frame.setVisible(true);
+
+		keyboard = Keyboard.defKeyboard;
+		addKeyListener(keyboard);
+
+		shelter = new AnimalShelter();
 	}
 
-	public void startMenu() {
+	public void addAnimals() {
 		try {
-			HowMany("DOGS", 10, "startMenuReturn");
+			HowMany("Animals", 10, "addAnimalsReturn");
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null,
@@ -97,7 +105,7 @@ public class MainFile extends Canvas implements Runnable {
 		}
 	}
 
-	public void startMenuReturn(int num) {
+	public void addAnimalsReturn(int num) {
 		for (int i = 0; i < num; i++) {
 			shelter.AddAnimal(new Mammal(true));
 		}
@@ -111,7 +119,7 @@ public class MainFile extends Canvas implements Runnable {
 					JOptionPane.INFORMATION_MESSAGE));
 			switch (num) {
 			case 1:
-				startMenu();
+				addAnimals();
 				break;
 			default:
 				break;
@@ -125,9 +133,13 @@ public class MainFile extends Canvas implements Runnable {
 
 	public void HowMany(String name, int max, final String returnMethod) {
 
-		InputJOption inputDialog = new InputJOption(frame, "How many " + name
-				+ " would you like?"
-				+ "\n -1. Cancel \n 0. Randomize \n Or type a positive integer", title);
+		InputJOption inputDialog = new InputJOption(
+				frame,
+				"How many "
+						+ name
+						+ " would you like?"
+						+ "\n -1. Cancel \n 0. Randomize \n Or type a positive integer",
+				title);
 
 		inputDialog.setVisible(true);
 
@@ -140,16 +152,20 @@ public class MainFile extends Canvas implements Runnable {
 				try {
 
 					int num = Integer.parseInt(inputDialog.textfield.getText());
-					if (num == 0) {
-						num = (int) (Math.random() * max);
-					} else if (num < 0) {
-						throw new NumberFormatException("Entered number cannot be less than 0");
-					}
 
-					// Get and call return method
-					Method method = thisMain.getClass().getMethod(returnMethod,
-							new Class[] { int.class });
-					method.invoke((Object) thisMain, num);
+					if (num != -1) {
+						if (num == 0) {
+							num = (int) (Math.random() * max);
+						} else if (num < 0) {
+							throw new NumberFormatException(
+									"Entered number cannot be less than 0");
+						}
+
+						// Get and call return method
+						Method method = thisMain.getClass().getMethod(
+								returnMethod, new Class[] { int.class });
+						method.invoke((Object) thisMain, num);
+					}
 
 				} catch (Exception f) {
 
@@ -193,7 +209,8 @@ public class MainFile extends Canvas implements Runnable {
 	}
 
 	public void update() {
-
+		keyboard.update();
+		shelter.Update();
 	}
 
 	public void render() {

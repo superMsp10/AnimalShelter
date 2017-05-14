@@ -1,13 +1,17 @@
 package code.shelter.animals;
 
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 
+import code.MainFile;
 import code.graphics.Display;
 import code.graphics.Sprite;
 
 public class Mammal {
 	public static String Genders[] = { "Male", "Female", "Trans" };
-	public static String Names[] = { "Abby", "Bob", "Jung", "Katy", "Purry", "Jones", "Vincent" };
+	public static String Names[] = { "Abby", "Bob", "Jung", "Katy", "Purry",
+			"Jones", "Vincent" };
 	public static String title = "Dogs: Mammal";
 	public String name;
 	protected int itsAge;
@@ -17,6 +21,8 @@ public class Mammal {
 	public Sprite thisSprite = Sprite.defualt;
 
 	private int x, y;
+	int xOff, yOff;
+	Random r = new Random();
 
 	public int x() {
 		return x;
@@ -36,39 +42,52 @@ public class Mammal {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public Mammal(boolean randomize) {
 		setAttributes(randomize);
 	}
-	
-	void setAttributes(boolean randomize){
+
+	void setAttributes(boolean randomize) {
 		if (randomize) {
 			gender = Genders[(int) (Math.random() * (Genders.length - 1))];
 			name = Names[(int) (Math.random() * (Names.length - 1))];
 		} else {
-			name = JOptionPane.showInputDialog(null, "Name? Type a good name!", title, JOptionPane.QUESTION_MESSAGE);
-			itsAge = Integer.parseInt(
-					JOptionPane.showInputDialog(null, "Age? Type in any number", title, JOptionPane.QUESTION_MESSAGE));
-			itsWeight = Double.parseDouble(JOptionPane.showInputDialog(null, "Weight? Type in any number", title,
+			name = JOptionPane.showInputDialog(null, "Name? Type a good name!",
+					title, JOptionPane.QUESTION_MESSAGE);
+			itsAge = Integer.parseInt(JOptionPane.showInputDialog(null,
+					"Age? Type in any number", title,
 					JOptionPane.QUESTION_MESSAGE));
-			gender = JOptionPane.showInputDialog(null, "Gender? Type Male or Female", title,
+			itsWeight = Double.parseDouble(JOptionPane.showInputDialog(null,
+					"Weight? Type in any number", title,
+					JOptionPane.QUESTION_MESSAGE));
+			gender = JOptionPane.showInputDialog(null,
+					"Gender? Type Male or Female", title,
 					JOptionPane.QUESTION_MESSAGE);
 		}
 	}
 
 	public void Render(Display screen) {
-		screen.renderAnimal(thisSprite, x, y);
+		screen.renderAnimal(thisSprite, x + xOff, y + yOff);
 	}
 
 	public void Update() {
-
+		if (r.nextInt(10) == 1) {
+			int yOnScreen = y + MainFile.SCREEN.getYOffset();
+			if (yOnScreen > 0 && yOnScreen < MainFile.HEIGHT){
+				xOff = r.nextInt(10) - 5;
+				yOff = r.nextInt(10) - 5;
+			}
+		}
 	}
 
 	public void edit() {
-		setAge(Integer.parseInt(
-				JOptionPane.showInputDialog(null, "Age? Type in any number", title, JOptionPane.QUESTION_MESSAGE)));
-		setWeight(Double.parseDouble(
-				JOptionPane.showInputDialog(null, "Weight? Type in any number", title, JOptionPane.QUESTION_MESSAGE)));
+		setAge(Integer
+				.parseInt(JOptionPane.showInputDialog(null,
+						"Age? Type in any number", title,
+						JOptionPane.QUESTION_MESSAGE)));
+		setWeight(Double.parseDouble(JOptionPane.showInputDialog(null,
+				"Weight? Type in any number", title,
+				JOptionPane.QUESTION_MESSAGE)));
 	}
 
 	public int getAge() {

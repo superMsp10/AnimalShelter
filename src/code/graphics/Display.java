@@ -7,8 +7,20 @@ import code.MainFile;
 public class Display {
 	public int[] pixels;
 	public Random random;
-	public int xOffSet = 0;
-	public int yOffSet = 0;
+	private int yOffSet = 0;
+	private int xOffSet = 20;
+
+	public void addYOffset(int addition) {
+		yOffSet += addition;
+	}
+
+	public int getYOffset() {
+		return yOffSet;
+	}
+
+	public void setYOffset(int set) {
+		yOffSet = set;
+	}
 
 	public Display() {
 		pixels = new int[MainFile.WIDTH * MainFile.HEIGHT];
@@ -34,7 +46,7 @@ public class Display {
 	}
 
 	public void renderSprite(Sprite sprite, int xstart, int ystart) {
-		
+
 		for (int y = 0; y < sprite.Height; y++) {
 			int yy = ystart + y;
 			if (yy >= MainFile.HEIGHT || yy < 0)
@@ -53,9 +65,9 @@ public class Display {
 
 		}
 	}
-	
-	public void renderAnimal(Sprite sprite, int xstart, int ystart){
-		renderSprite(sprite,  xstart + xOffSet,  ystart + yOffSet);
+
+	public void renderAnimal(Sprite sprite, int xstart, int ystart) {
+		renderSprite(sprite, xstart + xOffSet, ystart + yOffSet);
 	}
 
 }
