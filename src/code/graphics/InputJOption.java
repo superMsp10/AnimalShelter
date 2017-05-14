@@ -7,27 +7,43 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class InputJOption extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel textDisplay;
-	private JTextField textfield = new JTextField(10);
+	private JTextArea textDisplay;
+	public JTextField textfield = new JTextField(10);
 	private JButton confirmBtn = new JButton("Confirm");
+	
+	ActionListener linstener;
 
 	public InputJOption(JFrame frame, String display, String title) {
+		
 		super(frame, title, false);
 		JPanel panel = new JPanel();
-		panel.setLayout( new BoxLayout(panel, BoxLayout.Y_AXIS));
-		textDisplay = new JLabel(display);
+		EmptyBorder b = new EmptyBorder(5, 5, 5, 5);
+		panel.setBorder(b);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		confirmBtn.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		textDisplay = new JTextArea(display);
+		textDisplay.setFont(textDisplay.getFont().deriveFont(18.0f));
+		textDisplay.setEditable(false);
+		textDisplay.setBorder(b);
 
 		panel.add(textDisplay);
 		panel.add(textfield);
+		JLabel l = new JLabel();
+		l.setBorder(b);
+		panel.add(l);
 		panel.add(confirmBtn);
-
+		
 		add(panel);
 		pack();
+		setResizable(false);
 		setLocationRelativeTo(frame);
 	}
 
@@ -38,5 +54,6 @@ public class InputJOption extends JDialog {
 	public void addConfirmListener(ActionListener listener) {
 		confirmBtn.addActionListener(listener);
 	}
+
 
 }

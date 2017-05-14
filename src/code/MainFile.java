@@ -2,96 +2,112 @@ package code;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import code.graphics.Display;
 import code.graphics.InputJOption;
-import code.inputs.Keyboard;
+import code.graphics.SidePanel;
 import code.shelter.AnimalShelter;
+import code.shelter.animals.Mammal;
 
 public class MainFile extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
+
+	public static MainFile thisMain;
+
+	// Canvas
 	public static int WIDTH = 800;
 	public static int HEIGHT = 800;
 	public static int SCALE = 1;
 
-	public boolean running = false;
-
+	// JPanels
+	public SidePanel sidePanel;
 	JFrame frame;
 	private Thread thread;
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
+			BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
+			.getData();
 
+	// Mechanics
+	public boolean running = false;
+
+	// Others
 	public static Display SCREEN;
-	public AnimalShelter lev = new AnimalShelter();
-
-	private Keyboard keyboard;
-	boolean paused = false;
-	private boolean menued;
+	public AnimalShelter shelter = new AnimalShelter();
 	public static String title = "Animal House";
-
-	public static MainFile thisMain;
 
 	public static void main(String[] args) {
 
-		JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade by Mahan Pandey \n", "Welcome!", 1);
+		JOptionPane.showMessageDialog(null,
+				"Welcome to Animal House \nMade by Mahan Pandey \n",
+				"Welcome!", JOptionPane.INFORMATION_MESSAGE);
 
+		// Main Frame init
 		MainFile main = new MainFile();
-		main.frame.setResizable(false);
-		main.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		main.frame.add(main);
-		main.frame.pack();
-		main.frame.setLocationRelativeTo(null);
-		main.frame.setTitle(title);
-		main.frame.setVisible(true);
 		main.start();
+		main.startMenu();
 
-	}
-
-	public void retTest() {
-		System.out.println("hello");
 	}
 
 	public MainFile() {
+		// Initialize static reference to this instance
 		thisMain = this;
 
-		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
-		setPreferredSize(size);
 		frame = new JFrame();
 		SCREEN = new Display();
-		keyboard = Keyboard.defKeyboard;
-		addKeyListener(keyboard);
+		sidePanel = new SidePanel();
+		FlowLayout layout = new FlowLayout();
+		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+
+		setPreferredSize(size);
 		requestFocus();
 
-		try {
-			startMenu();
-			HowMany("DOGS", 10, "retTest");
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Not an accepted value, program will close", title,
-					JOptionPane.INFORMATION_MESSAGE);
-			System.exit(0);
-		}
-
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(layout);
+		frame.add(this);
+		frame.add(sidePanel);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setTitle(title);
+		frame.setVisible(true);
 	}
 
 	public void startMenu() {
+		try {
+			HowMany("DOGS", 10, "startMenuReturn");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Not an accepted value, program will close", title,
+					JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
+		}
+	}
 
-		// int num = HowMany("Animals", 20);
-		// for (int i = 0; i < num; i++)
-		// lev.AddAnimal(new Mammal(true));
+	public void startMenuReturn(int num) {
+		for (int i = 0; i < num; i++) {
+			shelter.AddAnimal(new Mammal(true));
+		}
 	}
 
 	public void mainMenu() {
 		try {
 			String options = "0.Close Menu \n1.Add more animals";
-			int num = Integer.parseInt(JOptionPane.showInputDialog(frame, "Choose an option:\n" + options, title,
+			int num = Integer.parseInt(JOptionPane.showInputDialog(frame,
+					"Choose an option:\n" + options, title,
 					JOptionPane.INFORMATION_MESSAGE));
 			switch (num) {
 			case 1:
@@ -101,80 +117,51 @@ public class MainFile extends Canvas implements Runnable {
 				break;
 			}
 		} catch (Exception e) {
+			JOptionPane
+					.showMessageDialog(null, "Invalid Option. Closing Menu.");
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Invalid Option. Closing Menu.");
 		}
-		menued = true;
 	}
 
 	public void HowMany(String name, int max, final String returnMethod) {
 
-		new InputJOption(frame, "Enter something", title).setVisible(true);
+		InputJOption inputDialog = new InputJOption(frame, "How many " + name
+				+ " would you like?"
+				+ "\n -1. Cancel \n 0. Randomize \n Or type a positive integer", title);
 
-		// InputJOption pane = new InputJOption(
-		// "How many " + name + " would you like?" + "\n -1. Randomize \n Or
-		// type any integer", title);
-		// pane.showInput();
-		// pane.dialog.addWindowListener(new WindowListener() {
-		//
-		// @Override
-		// public void windowOpened(WindowEvent e) {
-		//
-		// }
-		//
-		// @Override
-		// public void windowIconified(WindowEvent e) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void windowDeiconified(WindowEvent e) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void windowDeactivated(WindowEvent e) {
-		// try {
-		// System.out.println(pane.inputField.getText());
-		// int num = Integer.parseInt(pane.inputField.getText());
-		// if (num == -1) {
-		// num = (int) (Math.random() * max);
-		// }
-		// java.lang.reflect.Method method = null;
-		//
-		// try {
-		// method = thisMain.getClass().getMethod(returnMethod);
-		// method.invoke(num);
-		// } catch (Exception f) {
-		// f.printStackTrace();
-		// }
-		//
-		// pane.dialog.removeWindowListener(this);
-		// pane.closeInput();
-		// } catch (Exception ex) {
-		// ex.printStackTrace();
-		// }
-		//
-		// }
-		//
-		// @Override
-		// public void windowClosing(WindowEvent e) {
-		//
-		// }
-		//
-		// @Override
-		// public void windowClosed(WindowEvent e) {
-		//
-		// }
-		//
-		// @Override
-		// public void windowActivated(WindowEvent e) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
+		inputDialog.setVisible(true);
+
+		// Action Listener for confirm button
+		inputDialog.addConfirmListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+
+					int num = Integer.parseInt(inputDialog.textfield.getText());
+					if (num == 0) {
+						num = (int) (Math.random() * max);
+					} else if (num < 0) {
+						throw new NumberFormatException("Entered number cannot be less than 0");
+					}
+
+					// Get and call return method
+					Method method = thisMain.getClass().getMethod(returnMethod,
+							new Class[] { int.class });
+					method.invoke((Object) thisMain, num);
+
+				} catch (Exception f) {
+
+					f.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"Invalid Option. Closing Menu.");
+				}
+				// Close dialog
+				inputDialog.dispose();
+			}
+
+		});
 
 	}
 
@@ -206,14 +193,7 @@ public class MainFile extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		keyboard.update();
-		lev.Update();
-		if (!menued) {
-			if (keyboard.menu)
-				mainMenu();
-		} else if (!keyboard.menu) {
-			menued = false;
-		}
+
 	}
 
 	public void render() {
@@ -224,7 +204,7 @@ public class MainFile extends Canvas implements Runnable {
 		}
 
 		SCREEN.clear();
-		lev.Render(SCREEN);
+		shelter.Render(SCREEN);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = SCREEN.pixels[i];
