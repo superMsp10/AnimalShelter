@@ -8,7 +8,7 @@ public class Display {
 	public int[] pixels;
 	public Random random;
 	private int yOffSet = 0;
-	private int xOffSet = 20;
+	private int xOffSet = 50;
 
 	public void addYOffset(int addition) {
 		yOffSet += addition;
@@ -57,16 +57,16 @@ public class Display {
 				if (xx >= MainFile.WIDTH || xx < 0)
 					continue;
 
-				int col = sprite.pixels[x + y * sprite.Size];
-				if (col != -16777216)
+				int col = sprite.pixels[x + y * sprite.Width];
+
+				if (col != 0) {
 					pixels[xx + yy * MainFile.WIDTH] = col;
-
+				}
 			}
-
 		}
 	}
 
-	public void renderAnimal(Sprite sprite, int xstart, int ystart) {
+	public void renderWithOffset(Sprite sprite, int xstart, int ystart) {
 		renderSprite(sprite, xstart + xOffSet, ystart + yOffSet);
 	}
 

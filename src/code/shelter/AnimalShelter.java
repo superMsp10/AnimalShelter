@@ -21,6 +21,8 @@ public class AnimalShelter {
 	int scrollRate = 1;
 	boolean scrolledBefore;
 
+	int animalSize;
+
 	public AnimalShelter() {
 		animalsPerRow = MainFile.WIDTH / spaceBetween;
 		MainFile.SCREEN.setYOffset(yOffMax);
@@ -28,10 +30,11 @@ public class AnimalShelter {
 
 	public void Render(Display screen) {
 		screen.renderSprite(background, 0, 0);
-
-		for (Mammal m : animals) {
-			m.Render(screen);
+		animalSize = animals.size();
+		for (int i = 0; i < animalSize; i++) {
+			animals.get(i).Render(screen);
 		}
+
 	}
 
 	public void Update() {
@@ -57,8 +60,7 @@ public class AnimalShelter {
 		}
 		if (addition != 0) {
 			int newVal = MainFile.SCREEN.getYOffset() + addition;
-			if (newVal < yOffMax
-					&& newVal > -(curentMaxRowPos - MainFile.HEIGHT)) {
+			if (newVal < yOffMax && newVal > -(curentMaxRowPos - MainFile.HEIGHT)) {
 				MainFile.SCREEN.addYOffset(addition);
 			}
 			scrolledBefore = true;
