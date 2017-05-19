@@ -45,7 +45,7 @@ public class Sprite {
 	public Sprite(String text) {
 		BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();
-		Font font = new Font("Arial", Font.PLAIN, 48);
+		Font font = new Font("Arial", Font.PLAIN, 24);
 		g2d.setFont(font);
 
 		// Get height and width

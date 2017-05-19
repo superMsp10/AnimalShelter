@@ -1,26 +1,21 @@
 package code;
 
-import input.Keyboard;
-
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import code.graphics.Display;
-import code.graphics.InputJOption;
 import code.graphics.SidePanel;
 import code.shelter.AnimalShelter;
 import code.shelter.animals.Mammal;
+import input.Keyboard;
 
 public class MainFile extends Canvas implements Runnable {
 
@@ -37,10 +32,8 @@ public class MainFile extends Canvas implements Runnable {
 	public SidePanel sidePanel;
 	JFrame frame;
 	private Thread thread;
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
-			BufferedImage.TYPE_INT_RGB);
-	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer())
-			.getData();
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
 	// Mechanics
 	public boolean running = false;
@@ -53,9 +46,8 @@ public class MainFile extends Canvas implements Runnable {
 
 	public static void main(String[] args) {
 
-		JOptionPane.showMessageDialog(null,
-				"Welcome to Animal House \nMade by Mahan Pandey \n",
-				"Welcome!", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Welcome to Animal House \nMade by Mahan Pandey \n", "Welcome!",
+				JOptionPane.INFORMATION_MESSAGE);
 
 		// Main Frame init
 		MainFile main = new MainFile();
@@ -95,89 +87,59 @@ public class MainFile extends Canvas implements Runnable {
 
 	public void addAnimals() {
 		try {
-			HowMany("Animals", 10, "addAnimalsReturn");
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"Not an accepted value, program will close", title,
-					JOptionPane.INFORMATION_MESSAGE);
-			System.exit(0);
-		}
-	}
+			int num = HowMany("Animals", 10);
+			if (num == -1)
+				return;
 
-	public void addAnimalsReturn(int num) {
-		for (int i = 0; i < num; i++) {
-			shelter.AddAnimal(new Mammal(true));
-		}
-	}
+			int randomAmount = Integer.parseInt(JOptionPane.showInputDialog(null,
+					"How many would you like to randomize: "
+							+ "\n-1. All animals \n 0. No animals\n Or enter a positive integer out of " + num,
+					title, JOptionPane.QUESTION_MESSAGE));
+			boolean random = false;
 
-	public void mainMenu() {
-		try {
-			String options = "0.Close Menu \n1.Add more animals";
-			int num = Integer.parseInt(JOptionPane.showInputDialog(frame,
-					"Choose an option:\n" + options, title,
-					JOptionPane.INFORMATION_MESSAGE));
-			switch (num) {
-			case 1:
-				addAnimals();
-				break;
-			default:
-				break;
-			}
-		} catch (Exception e) {
-			JOptionPane
-					.showMessageDialog(null, "Invalid Option. Closing Menu.");
-			e.printStackTrace();
-		}
-	}
-
-	public void HowMany(String name, int max, final String returnMethod) {
-
-		InputJOption inputDialog = new InputJOption(
-				frame,
-				"How many "
-						+ name
-						+ " would you like?"
-						+ "\n -1. Cancel \n 0. Randomize \n Or type a positive integer",
-				title);
-
-		inputDialog.setVisible(true);
-
-		// Action Listener for confirm button
-		inputDialog.addConfirmListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-
-					int num = Integer.parseInt(inputDialog.textfield.getText());
-
-					if (num != -1) {
-						if (num == 0) {
-							num = (int) (Math.random() * max);
-						} else if (num < 0) {
-							throw new NumberFormatException(
-									"Entered number cannot be less than 0");
-						}
-
-						// Get and call return method
-						Method method = thisMain.getClass().getMethod(
-								returnMethod, new Class[] { int.class });
-						method.invoke((Object) thisMain, num);
+			for (int i = 0; i < num; i++) {
+				switch (randomAmount) {
+				case -1:
+					random = true;
+					break;
+				case 0:
+					random = false;
+					break;
+				default:
+					if (randomAmount >= num || randomAmount < 0) {
+						throw new NumberFormatException(
+								"Entered number cannot be less than 0 or higher than the number of animals");
 					}
 
-				} catch (Exception f) {
-
-					f.printStackTrace();
-					JOptionPane.showMessageDialog(null,
-							"Invalid Option. Closing Menu.");
+					if ((i + 1) < randomAmount)
+						random = true;
+					break;
 				}
-				// Close dialog
-				inputDialog.dispose();
+				shelter.AddAnimal(new Mammal(random));
 			}
 
-		});
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Not an accepted value, retry", title, JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+	public int HowMany(String name, int max) {
+
+		String input = JOptionPane.showInputDialog(null,
+				"How many " + name + " would you like?" + "\n-1. Cancel \n 0. Randomize \n Or type a positive integer",
+				title, JOptionPane.QUESTION_MESSAGE);
+		int num = Integer.parseInt(input);
+
+		if (num != -1) {
+			if (num == 0) {
+				num = (int) (Math.random() * max);
+			} else if (num < 0) {
+				throw new NumberFormatException("Entered number cannot be less than 0");
+			}
+		}
+
+		return num;
 
 	}
 

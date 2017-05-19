@@ -66,8 +66,7 @@ public class Mammal {
 
 	public void Render(Display screen) {
 		screen.renderWithOffset(thisSprite, x + xOff, y + yOff);
-		screen.renderWithOffset(namePlate, x, y + thisSprite.Size/2);
-
+		screen.renderWithOffset(namePlate, x + (thisSprite.Width - namePlate.Width / 2), y + thisSprite.Height);
 	}
 
 	public void Update() {
